@@ -16,6 +16,7 @@ closeTaskBox.on("click", function(event){
 showTaskBox.on("click", function(event){
     {
         event.preventDefault();
+        taskBox.addClass("mt-4");
         taskBox.show();
         blind.show();
     }
