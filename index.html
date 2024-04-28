@@ -38,32 +38,56 @@
           class="btn btn-success"
           data-bs-toggle="modal"
           data-bs-target="#formModal"
+          id="show-task-box-btn"
         >
           Add Task
         </button>
       </div>
       <!-- Todo: Create a modal with a form to add tasks -->
-      <section class="position-absolute start-50 translate-middle d-flex flex-column p-4 task-box">
-        <section class="d-flex justify-content-between heading">
-          <h3>Add task</h3>
-          <button class="btn btn-outline-secondary mb-5">X</button>
+
+      <section class="position-absolute start-50 translate-middle" id="task-box">
+        <section
+          class="d-flex justify-content-between align-items-center m-3 task-box__heading"
+        >
+          <h3 class="m-0">Add task</h3>
+          <button type="button" class="btn btn-outline-secondary border-0 fs-3" id="close-task-box-btn">
+            X
+          </button>
         </section>
-        <div class="mb-3 d-flex justify-content-between">
-          <div class="">
-            <label for="task-title" class="form-label">Task Title</label>
-            <input type="text" class="form-control" id="task-title" />
+        <hr />
+        <section class="m-5 d-flex flex-column task-box__form">
+          <div
+            class="mb-3 d-flex flex-column flex-md-row justify-content-between"
+          >
+            <div class="">
+              <label for="task-title" class="form-label">Task Title</label>
+              <input type="text" class="form-control" id="task-title" />
+            </div>
+            <div class="">
+              <label for="task-date" class="form-label">Task Due Date</label>
+              <input type="text" class="form-control" id="task-date" />
+            </div>
           </div>
-          <div class="">
-            <label for="task-date" class="form-label">Task Due Date</label>
-            <input type="text" class="form-control" id="task-date" />
+          <div class="mb-5">
+            <label for="task-description" class="form-label"
+              >Task Description</label
+            >
+            <textarea
+              class="form-control"
+              id="task-description"
+              rows="3"
+            ></textarea>
           </div>
-        </div>
-        <div class="mb-5">
-          <label for="task-description" class="form-label">Task Description</label>
-          <textarea class="form-control" id="task-description" rows="3"></textarea>
-        </div>
-        <button type="button" class="btn btn-success align-self-center">Add Task</button>
+          <button
+            type="button"
+            class="btn btn-success align-self-center fs-5"
+            id="add-task"
+          >
+            Add Task
+          </button>
+        </section>
       </section>
+
       <div class="row swim-lanes text-center justify-content-between">
         <div class="col-12 col-lg-4 d-flex">
           <div id="to-do" class="card border-light mb-3 lane flex-grow-1">
@@ -103,7 +127,11 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
@@ -111,6 +139,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="./assets/js/script.js"></script>
+    <script src="./js/script.js"></script>
   </body>
 </html>
