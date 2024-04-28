@@ -3,18 +3,21 @@ let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 const closeTaskBox = $("#close-task-box-btn");
 const showTaskBox = $("#show-task-box-btn");
+const blind = $("#blind");
 const taskBox = $("#task-box");
 
 closeTaskBox.on("click", function(event){
     event.preventDefault();
     console.log("button is clicked");
     taskBox.hide();
+    blind.hide();
 });
 
 showTaskBox.on("click", function(event){
     {
         event.preventDefault();
         taskBox.show();
+        blind.show();
     }
 });
 

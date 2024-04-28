@@ -19,9 +19,16 @@ body {
   cursor: grab;
 }
 
+/* BLIND */
+#blind{
+  display: none;
+  opacity: 0.33;
+  z-index: 1;
+}
+
 /* TASK BOX */
 #task-box{
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   max-width: 440px;
   border: 1px solid #707070;
