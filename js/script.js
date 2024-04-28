@@ -8,6 +8,7 @@ const blind = $("#blind");
 const taskBox = $("#task-box");
 const addTask = $("#add-task");
 
+$("#task-date").datepicker();
 
 closeTaskBox.on("click", function (event) {
   taskBox.hide();
@@ -55,7 +56,7 @@ function handleAddTask(event) {
     validateData(date, "Task Date") &&
     validateData(description, "Task Description")
   ) {
-    
+
     task.title = title;
     task.date = date;
     task.description = description;
