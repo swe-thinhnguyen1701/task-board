@@ -1,7 +1,9 @@
 // Retrieve tasks and nextId from localStorage
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 if(taskList === null) taskList = [];
+
 let nextId = JSON.parse(localStorage.getItem("nextId"));
+
 const closeTaskBox = $("#close-task-box-btn");
 const showTaskBox = $("#show-task-box-btn");
 const blind = $("#blind");
@@ -36,7 +38,9 @@ function generateTaskId() {}
  *
  * @param {object} task
  */
-function createTaskCard(task) {}
+function createTaskCard(task) {
+
+}
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {}
@@ -47,7 +51,7 @@ function handleAddTask(event) {
 
   const task = {
     title: "",
-    dat: "",
+    date: "",
     description: "",
   };
 
@@ -66,8 +70,7 @@ function handleAddTask(event) {
 
     // store data
     taskList.push(task);
-    localStorage.setItem("task", JSON.stringify(taskList));
-    console.log(taskList);
+    localStorage.setItem("tasks", JSON.stringify(taskList));
 
     // clear form and turn off blind and task box
     clearForm();
