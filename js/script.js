@@ -11,6 +11,9 @@ const addTask = $("#add-task");
 $("#task-date").datepicker();
 
 closeTaskBox.on("click", function (event) {
+  $("#task-title").val("");
+  $("#task-date").val("");
+  $("#task-description").val("");
   taskBox.hide();
   blind.hide();
 });

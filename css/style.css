@@ -37,6 +37,6 @@ body {
   display: none;
 }
 
-.task-box__form input{
+.task-box__form input, .task-box__form textarea{
   font-size: 1.3rem;
 }
