@@ -11,7 +11,12 @@ const showTaskBox = $("#show-task-box-btn");
 const blind = $("#blind");
 const taskBox = $("#task-box");
 const addTask = $("#add-task");
-const toDoList = $("#todo-cards");
+const toDoCardsList = $("#todo-cards");
+
+const toDoList =
+  JSON.parse(localStorage.getItem("toDoList")) === null
+    ? []
+    : JSON.parse(localStorage.getItem("toDoList"));
 
 $("#task-date").datepicker();
 
@@ -53,18 +58,18 @@ function createTaskCard(task) {
   const cardHeader = $("<h4>");
   const cardBody = $("<div>");
   const cardDate = $("<p>");
-  const cardStatus = $("<p>");
+  const cardDescription = $("<p>");
   const cardDeleteBtn = $("<button>");
 
   cardDate.addClass("card-text");
   cardDate.text(`${task.date}`);
-  cardStatus.addClass("card-text");
-  cardStatus.text(`on it`);
+  cardDescription.addClass("card-text");
+  cardDescription.text(`${task.description}`);
   cardDeleteBtn.addClass("btn btn-danger");
   cardDeleteBtn.text("Delete");
 
   cardBody.append(cardDate);
-  cardBody.append(cardStatus);
+  cardBody.append(cardDescription);
   cardBody.append(cardDeleteBtn);
   cardBody.addClass(
     "card-body d-flex flex-column justify-content-center align-items-center"
@@ -73,18 +78,18 @@ function createTaskCard(task) {
   cardHeader.addClass("card-header fw-bold");
   cardHeader.text(`${task.title}`);
 
-  card.addClass("card text-light");
+  card.addClass("card m-3 mx-auto w-75");
   card.append(cardHeader);
   card.append(cardBody);
 
-  if(taskDate.isSame(today, "day")){
-    card.addClass("bg-warning");
-  }else if(taskDate.isBefore(today)){
-    card.addClass("bg-danger");
+  if (taskDate.isSame(today, "day")) {
+    card.addClass("text-light bg-warning");
+  } else if (taskDate.isBefore(today)) {
+    card.addClass("text-light bg-danger");
     cardDeleteBtn.addClass("border border-white");
   }
-  
-  toDoList.append(card);
+
+  toDoCardsList.append(card);
 }
 
 // Todo: create a function to render the task list and make cards draggable
@@ -117,7 +122,10 @@ function handleAddTask(event) {
     taskList.push(task);
     localStorage.setItem("tasks", JSON.stringify(taskList));
 
+    // generate task card and store toDoList
     createTaskCard(task);
+    toDoList.push(task);
+    localStorage.setItem("toDoList", JSON.stringify(toDoList));
 
     // clear form and turn off blind and task box
     clearForm();
@@ -134,8 +142,13 @@ function handleDeleteTask(event) {}
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {}
 
-// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-$(document).ready(function () {});
+// Todo: when the page loads, render the task list, add event listeners,
+// make lanes droppable, and make the due date field a date picker
+$(document).ready(function () {
+  for (task of toDoList) {
+    createTaskCard(task);
+  }
+});
 
 /**
  * validateData validates data.
