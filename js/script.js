@@ -2,7 +2,9 @@
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 if (taskList === null) taskList = [];
 
-let nextId = JSON.parse(localStorage.getItem("nextId"));
+let nextId = JSON.parse(localStorage.getItem("nextId"))
+  ? JSON.parse(localStorage.getItem("nextId"))
+  : [];
 //
 
 /** FIELDS **/
@@ -13,10 +15,10 @@ const taskBox = $("#task-box");
 const addTask = $("#add-task");
 const toDoCardsList = $("#todo-cards-list");
 
-const toDoList =
-  JSON.parse(localStorage.getItem("toDoList")) === null
-    ? []
-    : JSON.parse(localStorage.getItem("toDoList"));
+// const toDoList =
+//   JSON.parse(localStorage.getItem("toDoList")) === null
+//     ? []
+//     : JSON.parse(localStorage.getItem("toDoList"));
 
 $("#task-date").datepicker();
 
@@ -40,7 +42,7 @@ addTask.on("click", handleAddTask);
 
 // Todo: create a function to generate a unique task id
 /**
- * 
+ *
  * @returns an
  */
 function generateTaskId() {
@@ -72,7 +74,7 @@ function createTaskCard(task) {
   cardDate.text(`${task.date}`);
   cardDescription.addClass("card-text");
   cardDescription.text(`${task.description}`);
-  cardDeleteBtn.addClass("btn btn-danger");
+  cardDeleteBtn.addClass("btn btn-danger delete-item-btn");
   cardDeleteBtn.text("Delete");
 
   cardBody.append(cardDate);
@@ -98,7 +100,8 @@ function createTaskCard(task) {
 
   listItem.addClass("list-group-item w-75 border-0 p-0 m-3 mx-auto");
   listItem.append(card);
-  toDoCardsList.append(listItem);
+
+  $(task.location).append(listItem);
 }
 
 // Todo: create a function to render the task list and make cards draggable
@@ -113,7 +116,7 @@ function handleAddTask(event) {
     title: "",
     date: "",
     description: "",
-    id: ""
+    location: "#todo-cards-list",
   };
 
   const title = $("#task-title").val();
@@ -127,6 +130,7 @@ function handleAddTask(event) {
     task.title = title;
     task.date = date;
     task.description = description;
+    task.id = generateTaskId();
 
     // store data
     taskList.push(task);
@@ -134,8 +138,8 @@ function handleAddTask(event) {
 
     // generate task card and store toDoList
     createTaskCard(task);
-    toDoList.push(task);
-    localStorage.setItem("toDoList", JSON.stringify(toDoList));
+    // toDoList.push(task);
+    // localStorage.setItem("toDoList", JSON.stringify(toDoList));
 
     // clear form and turn off blind and task box
     clearForm();
@@ -148,7 +152,8 @@ function handleAddTask(event) {
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event) {
-
+  // event.preventDefault();
+  $(this).closest("li").remove();
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
@@ -157,7 +162,7 @@ function handleDrop(event, ui) {}
 // Todo: when the page loads, render the task list, add event listeners,
 // make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
-  for (task of toDoList) {
+  for (task of taskList) {
     createTaskCard(task);
   }
 });
@@ -186,3 +191,5 @@ const clearForm = function () {
   $("#task-date").val("");
   $("#task-description").val("");
 };
+
+toDoCardsList.on("click", ".delete-item-btn", handleDeleteTask);
