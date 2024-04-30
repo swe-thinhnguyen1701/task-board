@@ -11,7 +11,7 @@ const showTaskBox = $("#show-task-box-btn");
 const blind = $("#blind");
 const taskBox = $("#task-box");
 const addTask = $("#add-task");
-const toDoCardsList = $("#todo-cards");
+const toDoCardsList = $("#todo-cards-list");
 
 const toDoList =
   JSON.parse(localStorage.getItem("toDoList")) === null
@@ -39,7 +39,13 @@ showTaskBox.on("click", function (event) {
 addTask.on("click", handleAddTask);
 
 // Todo: create a function to generate a unique task id
-function generateTaskId() {}
+/**
+ * 
+ * @returns an
+ */
+function generateTaskId() {
+  return Math.floor(Math.random() * 900000) + 100000;
+}
 
 // Todo: create a function to create a task card
 /**
@@ -54,6 +60,7 @@ function createTaskCard(task) {
   console.log(today);
   console.log(taskDate.isSame(today, "day"));
 
+  const listItem = $("<li>");
   const card = $("<div>");
   const cardHeader = $("<h4>");
   const cardBody = $("<div>");
@@ -78,7 +85,7 @@ function createTaskCard(task) {
   cardHeader.addClass("card-header fw-bold");
   cardHeader.text(`${task.title}`);
 
-  card.addClass("card m-3 mx-auto w-75");
+  card.addClass("card mx-auto");
   card.append(cardHeader);
   card.append(cardBody);
 
@@ -89,7 +96,9 @@ function createTaskCard(task) {
     cardDeleteBtn.addClass("border border-white");
   }
 
-  toDoCardsList.append(card);
+  listItem.addClass("list-group-item w-75 border-0 p-0 m-3 mx-auto");
+  listItem.append(card);
+  toDoCardsList.append(listItem);
 }
 
 // Todo: create a function to render the task list and make cards draggable
@@ -104,6 +113,7 @@ function handleAddTask(event) {
     title: "",
     date: "",
     description: "",
+    id: ""
   };
 
   const title = $("#task-title").val();
@@ -137,7 +147,9 @@ function handleAddTask(event) {
 }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(event) {}
+function handleDeleteTask(event) {
+
+}
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {}
