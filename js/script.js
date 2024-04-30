@@ -17,11 +17,6 @@ const toDoList = $("#todo-cards-list");
 const inProgressList = $("#in-progress-cards-list");
 const doneList = $("#done-cards-list");
 
-// const toDoList =
-//   JSON.parse(localStorage.getItem("toDoList")) === null
-//     ? []
-//     : JSON.parse(localStorage.getItem("toDoList"));
-
 $("#task-date").datepicker();
 
 closeTaskBox.on("click", function (event) {
@@ -53,6 +48,7 @@ function generateTaskId() {
     id = Math.floor(Math.random() * 900000) + 100000;
   }
   nextId.push(id);
+  localStorage.setItem("nextId", JSON.stringify(nextId));
   return id;
 }
 
@@ -99,14 +95,15 @@ function createTaskCard(task) {
   card.append(cardHeader);
   card.append(cardBody);
 
-  if (taskDate.isSame(today, "day")) {
+  if (taskDate.isSame(today, "day") && task.location !== "#done-cards-list") {
     card.addClass("text-light bg-warning");
-  } else if (taskDate.isBefore(today)) {
+  } else if (taskDate.isBefore(today) && task.location !== "#done-cards-list") {
     card.addClass("text-light bg-danger");
     cardDeleteBtn.addClass("border border-white");
   }
 
   listItem.addClass("list-group-item w-75 border-0 p-0 m-3 mx-auto");
+  listItem.attr("id", task.id);
   listItem.append(card);
 
   $(task.location).append(listItem);
@@ -164,7 +161,17 @@ function handleAddTask(event) {
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event) {
-  // event.preventDefault();
+  const taskId = parseInt($(this).closest("li").attr("id"));
+  console.log(typeof taskId);
+  taskList = taskList.filter(function(task) {
+    return task.id !== taskId;
+  });
+  nextId = nextId.filter(function(id) {
+    return id !== taskId
+  });
+
+  localStorage.setItem("tasks", JSON.stringify(taskList));
+  localStorage.setItem("nextId", JSON.stringify(nextId));
   $(this).closest("li").remove();
 }
 
