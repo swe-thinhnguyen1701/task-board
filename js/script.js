@@ -13,7 +13,9 @@ const showTaskBox = $("#show-task-box-btn");
 const blind = $("#blind");
 const taskBox = $("#task-box");
 const addTask = $("#add-task");
-const toDoCardsList = $("#todo-cards-list");
+const toDoList = $("#todo-cards-list");
+const inProgressList = $("#in-progress-cards-list");
+const doneList = $("#done-cards-list");
 
 // const toDoList =
 //   JSON.parse(localStorage.getItem("toDoList")) === null
@@ -46,12 +48,18 @@ addTask.on("click", handleAddTask);
  * @returns an
  */
 function generateTaskId() {
-  return Math.floor(Math.random() * 900000) + 100000;
+  let id = Math.floor(Math.random() * 900000) + 100000;
+  while (nextId.includes(id)) {
+    id = Math.floor(Math.random() * 900000) + 100000;
+  }
+  nextId.push(id);
+  return id;
 }
 
 // Todo: create a function to create a task card
 /**
- *
+ * createTaskCard generates a task card and puts into a correct list based on its location
+ * 
  * @param {object} task
  */
 function createTaskCard(task) {
@@ -59,8 +67,8 @@ function createTaskCard(task) {
   const today = dayjs();
   const taskDate = dayjs(task.date, "MM/DD/YYYY");
 
-  console.log(today);
-  console.log(taskDate.isSame(today, "day"));
+  // console.log(today);
+  // console.log(taskDate.isSame(today, "day"));
 
   const listItem = $("<li>");
   const card = $("<div>");
@@ -105,7 +113,11 @@ function createTaskCard(task) {
 }
 
 // Todo: create a function to render the task list and make cards draggable
-function renderTaskList() {}
+function renderTaskList() {
+  $("#todo-cards-list, #in-progress-cards-list, #done-cards-list").sortable({
+    connectWith: ".connectedSortable"
+  }).disableSelection();
+}
 
 // Todo: create a function to handle adding a new task
 // TO DO LIST
@@ -165,6 +177,8 @@ $(document).ready(function () {
   for (task of taskList) {
     createTaskCard(task);
   }
+
+  renderTaskList();
 });
 
 /**
@@ -192,4 +206,4 @@ const clearForm = function () {
   $("#task-description").val("");
 };
 
-toDoCardsList.on("click", ".delete-item-btn", handleDeleteTask);
+toDoList.on("click", ".delete-item-btn", handleDeleteTask);

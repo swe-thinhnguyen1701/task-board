@@ -40,3 +40,14 @@ body {
 .task-box__form input, .task-box__form textarea{
   font-size: 1.3rem;
 }
+
+/*  */
+.custom-height{
+  min-height: 6rem;
+}
+
+@media screen and (min-width: 992px ){
+  .custom-height{
+    min-height: 45rem;
+  }
+}
