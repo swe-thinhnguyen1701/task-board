@@ -16,11 +16,12 @@ const addTask = $("#add-task");
 const toDoList = $("#todo-cards-list");
 const inProgressList = $("#in-progress-cards-list");
 const doneList = $("#done-cards-list");
+const today = dayjs();
 
 // Todo: create a function to generate a unique task id
 /**
  * generateTaskId create a unique id
- * 
+ *
  * @returns a unique ID
  */
 function generateTaskId() {
@@ -40,7 +41,6 @@ function generateTaskId() {
  * @param {object} task will be display as a card on browser
  */
 function createTaskCard(task) {
-  const today = dayjs();
   const taskDate = dayjs(task.date, "MM/DD/YYYY");
 
   const listItem = $("<li>");
@@ -162,15 +162,27 @@ function handleDrop(event, ui) {
   const taskObj = taskList.find(function (task) {
     return task.id === taskId;
   });
+
+  const prevLocation = taskObj.location;
   const newLocation = $(event.target).attr("id");
   taskObj.location = `#${newLocation}`;
   console.log("Test");
-  $(`#${taskId} div`).removeClass("bg-danger bg-warning text-light")
-  // console.log($(`#${newLocation}`).get());
 
-  // if(newLocation === "#done-cards-list"){
+  // console.log($(`#${newLocation}`));
+  console.log(newLocation === "done-cards-list");
 
-  // }
+  if (newLocation === "done-cards-list") {
+    $(`#${taskId} div`).removeClass("bg-danger bg-warning text-light");
+  } else {
+    if (prevLocation === "#done-cards-list") {
+      const date = dayjs(taskObj.date, "MM/DD/YYYY")
+      if (date.isSame(today, "day")) {
+        $(`#${taskId} div`).addClass("text-light bg-warning");
+      } else if (date.isBefore(today)) {
+        $(`#${taskId} div`).addClass("text-light bg-danger");
+      }
+    }
+  }
 
   localStorage.setItem("tasks", JSON.stringify(taskList));
   // console.log(taskObj);
