@@ -55,7 +55,7 @@ function generateTaskId() {
 // Todo: create a function to create a task card
 /**
  * createTaskCard generates a task card and puts into a correct list based on its location
- * 
+ *
  * @param {object} task
  */
 function createTaskCard(task) {
@@ -111,9 +111,12 @@ function createTaskCard(task) {
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-  $("#todo-cards-list, #in-progress-cards-list, #done-cards-list").sortable({
-    connectWith: ".connectedSortable"
-  }).disableSelection();
+  $("#todo-cards-list, #in-progress-cards-list, #done-cards-list")
+    .sortable({
+      connectWith: ".connectedSortable",
+      update: handleDrop,
+    })
+    .disableSelection();
 }
 
 // Todo: create a function to handle adding a new task
@@ -160,14 +163,14 @@ function handleAddTask(event) {
 }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(event) {
+function handleDeleteTask() {
   const taskId = parseInt($(this).closest("li").attr("id"));
   console.log(typeof taskId);
-  taskList = taskList.filter(function(task) {
+  taskList = taskList.filter(function (task) {
     return task.id !== taskId;
   });
-  nextId = nextId.filter(function(id) {
-    return id !== taskId
+  nextId = nextId.filter(function (id) {
+    return id !== taskId;
   });
 
   localStorage.setItem("tasks", JSON.stringify(taskList));
@@ -176,7 +179,15 @@ function handleDeleteTask(event) {
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
-function handleDrop(event, ui) {}
+function handleDrop(event, ui) {
+  const taskId = parseInt(ui.item.attr("id"));
+  const taskObj = taskList.find(function (task) {
+    return task.id === taskId;
+  });
+  taskObj.location = `#${$(event.target).attr("id")}`;
+  localStorage.setItem("tasks", JSON.stringify(taskList));
+  // console.log(taskObj);
+}
 
 // Todo: when the page loads, render the task list, add event listeners,
 // make lanes droppable, and make the due date field a date picker
