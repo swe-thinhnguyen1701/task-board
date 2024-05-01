@@ -19,22 +19,6 @@ const doneList = $("#done-cards-list");
 
 $("#task-date").datepicker();
 
-closeTaskBox.on("click", function (event) {
-  $("#task-title").val("");
-  $("#task-date").val("");
-  $("#task-description").val("");
-  // taskForm.hide();
-  // blind.hide();
-});
-
-showTaskBox.on("click", function (event) {
-  {
-    taskForm.addClass("mt-4");
-    // taskForm.show();
-    // blind.show();
-  }
-});
-
 addTask.on("click", handleAddTask);
 
 // Todo: create a function to generate a unique task id
@@ -62,9 +46,6 @@ function createTaskCard(task) {
   console.log("createTaskCard(task) is invoked");
   const today = dayjs();
   const taskDate = dayjs(task.date, "MM/DD/YYYY");
-
-  // console.log(today);
-  // console.log(taskDate.isSame(today, "day"));
 
   const listItem = $("<li>");
   const card = $("<div>");
@@ -150,13 +131,9 @@ function handleAddTask(event) {
 
     // generate task card and store toDoList
     createTaskCard(task);
-    // toDoList.push(task);
-    // localStorage.setItem("toDoList", JSON.stringify(toDoList));
 
     // clear form and turn off blind and task box
     clearForm();
-    // taskForm.hide();
-    // blind.hide();
 
     taskForm.modal("hide");
   }
@@ -165,9 +142,9 @@ function handleAddTask(event) {
 }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask() {
-  const taskId = parseInt($(this).closest("li").attr("id"));
-  console.log(typeof taskId);
+function handleDeleteTask(event) {
+  const taskId = parseInt($(event.target).closest("li").attr("id"));
+  console.log(taskId);
   taskList = taskList.filter(function (task) {
     return task.id !== taskId;
   });
@@ -227,3 +204,5 @@ const clearForm = function () {
 };
 
 toDoList.on("click", ".delete-item-btn", handleDeleteTask);
+inProgressList.on("click", ".delete-item-btn", handleDeleteTask);
+doneList.on("click", ".delete-item-btn", handleDeleteTask);
