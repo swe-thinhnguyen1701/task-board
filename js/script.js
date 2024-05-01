@@ -17,14 +17,11 @@ const toDoList = $("#todo-cards-list");
 const inProgressList = $("#in-progress-cards-list");
 const doneList = $("#done-cards-list");
 
-$("#task-date").datepicker();
-
-addTask.on("click", handleAddTask);
-
 // Todo: create a function to generate a unique task id
 /**
- *
- * @returns an
+ * generateTaskId create a unique id
+ * 
+ * @returns a unique ID
  */
 function generateTaskId() {
   let id = Math.floor(Math.random() * 900000) + 100000;
@@ -40,10 +37,9 @@ function generateTaskId() {
 /**
  * createTaskCard generates a task card and puts into a correct list based on its location
  *
- * @param {object} task
+ * @param {object} task will be display as a card on browser
  */
 function createTaskCard(task) {
-  console.log("createTaskCard(task) is invoked");
   const today = dayjs();
   const taskDate = dayjs(task.date, "MM/DD/YYYY");
 
@@ -83,7 +79,7 @@ function createTaskCard(task) {
     cardDeleteBtn.addClass("border border-white");
   }
 
-  listItem.addClass("list-group-item w-75 border-0 p-0 m-3 mx-auto");
+  listItem.addClass("list-group-item w-75 border-0 p-0 m-3 mx-auto task-card");
   listItem.attr("id", task.id);
   listItem.append(card);
 
@@ -91,6 +87,9 @@ function createTaskCard(task) {
 }
 
 // Todo: create a function to render the task list and make cards draggable
+/**
+ * renderTaskList connect all 3 list and allow items to be dragged and dropped into 3 lists.
+ */
 function renderTaskList() {
   $("#todo-cards-list, #in-progress-cards-list, #done-cards-list")
     .sortable({
@@ -163,7 +162,16 @@ function handleDrop(event, ui) {
   const taskObj = taskList.find(function (task) {
     return task.id === taskId;
   });
-  taskObj.location = `#${$(event.target).attr("id")}`;
+  const newLocation = $(event.target).attr("id");
+  taskObj.location = `#${newLocation}`;
+  console.log("Test");
+  $(`#${taskId} div`).removeClass("bg-danger bg-warning text-light")
+  // console.log($(`#${newLocation}`).get());
+
+  // if(newLocation === "#done-cards-list"){
+
+  // }
+
   localStorage.setItem("tasks", JSON.stringify(taskList));
   // console.log(taskObj);
 }
@@ -171,6 +179,9 @@ function handleDrop(event, ui) {
 // Todo: when the page loads, render the task list, add event listeners,
 // make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
+  $("#task-date").datepicker();
+
+  addTask.on("click", handleAddTask);
   for (task of taskList) {
     createTaskCard(task);
   }
