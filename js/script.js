@@ -11,7 +11,7 @@ let nextId = JSON.parse(localStorage.getItem("nextId"))
 const closeTaskBox = $("#close-task-box-btn");
 const showTaskBox = $("#show-task-box-btn");
 const blind = $("#blind");
-const taskBox = $("#task-box");
+const taskForm = $("#task-form");
 const addTask = $("#add-task");
 const toDoList = $("#todo-cards-list");
 const inProgressList = $("#in-progress-cards-list");
@@ -23,15 +23,15 @@ closeTaskBox.on("click", function (event) {
   $("#task-title").val("");
   $("#task-date").val("");
   $("#task-description").val("");
-  taskBox.hide();
-  blind.hide();
+  // taskForm.hide();
+  // blind.hide();
 });
 
 showTaskBox.on("click", function (event) {
   {
-    taskBox.addClass("mt-4");
-    taskBox.show();
-    blind.show();
+    taskForm.addClass("mt-4");
+    // taskForm.show();
+    // blind.show();
   }
 });
 
@@ -155,8 +155,10 @@ function handleAddTask(event) {
 
     // clear form and turn off blind and task box
     clearForm();
-    taskBox.hide();
-    blind.hide();
+    // taskForm.hide();
+    // blind.hide();
+
+    taskForm.modal("hide");
   }
 
   return;

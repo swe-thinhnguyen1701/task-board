@@ -34,11 +34,56 @@
     </header>
     <div class="container">
       <div class="text-center mb-5">
-        <button class="btn btn-success" id="show-task-box-btn">Add Task</button>
+        <button
+          type="button"
+          class="btn btn-success"
+          id="show-task-box-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#task-form"
+        >
+          Add Task
+        </button>
       </div>
       <!-- Todo: Create a modal with a form to add tasks -->
 
-      <section id="blind" class="fixed-top vh-100 bg-secondary"></section>
+      <!-- Fix Modal -->
+      <div class="modal fade" id="task-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLabel">Modal title</h4>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form class="m-5 d-flex flex-column task-box__form">
+                <div class="mb-3 d-flex flex-column flex-md-row justify-content-between">
+                  <div class="">
+                    <label for="task-title" class="form-label">Task Title</label>
+                    <input type="text" class="form-control" id="task-title" autocomplete="off"/>
+                  </div>
+                  <fieldset class="disable">
+                    <label for="task-date" class="form-label">Task Due Date</label>
+                    <input type="text" class="form-control" id="task-date" autocomplete="off"/>
+                  </fieldset>
+                </div>
+                <div class="mb-5">
+                  <label for="task-description" class="form-label" autocomplete="off">Task Description</label>
+                  <textarea class="form-control" id="task-description" rows="3"></textarea>
+                </div>
+                <button type="button" class="btn btn-success align-self-center fs-5" id="add-task"> Add Task </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL self made -->
+      <!-- <section id="blind" class="fixed-top vh-100 bg-secondary"></section>
       <section
         class="position-absolute top-0 start-50 translate-middle-x"
         id="task-box"
@@ -97,7 +142,7 @@
             Add Task
           </button>
         </form>
-      </section>
+      </section> -->
 
       <div class="row swim-lanes text-center justify-content-between">
         <div class="col-12 col-lg-4 d-flex">
