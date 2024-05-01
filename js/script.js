@@ -20,7 +20,9 @@ const today = dayjs();
 
 // Todo: create a function to generate a unique task id
 /**
- * generateTaskId create a unique id
+ * generateTaskId create a unique id with 6 digits and stores id to the nextId list
+ * to make sure id is not repeated. If id is already exist, then the system will 
+ * re-generate again to find the unique one.
  *
  * @returns a unique ID
  */
@@ -100,7 +102,13 @@ function renderTaskList() {
 }
 
 // Todo: create a function to handle adding a new task
-// TO DO LIST
+/**
+ * handleAddTask will add new task to the TO-DO list by default and updates
+ * the local storage for further actions.
+ * 
+ * @param {*} event 
+ * @returns 
+ */
 function handleAddTask(event) {
   event.preventDefault();
 
@@ -141,6 +149,12 @@ function handleAddTask(event) {
 }
 
 // Todo: create a function to handle deleting a task
+/**
+ * handleDeleteTask is responsible for removing a specific task from a particular list
+ * and updates data once an item has been removed.
+ * 
+ * @param {*} event 
+ */
 function handleDeleteTask(event) {
   const taskId = parseInt($(event.target).closest("li").attr("id"));
   console.log(taskId);
@@ -175,7 +189,7 @@ function handleDrop(event, ui) {
     $(`#${taskId} div`).removeClass("bg-danger bg-warning text-light");
   } else {
     if (prevLocation === "#done-cards-list") {
-      const date = dayjs(taskObj.date, "MM/DD/YYYY")
+      const date = dayjs(taskObj.date, "MM/DD/YYYY");
       if (date.isSame(today, "day")) {
         $(`#${taskId} div`).addClass("text-light bg-warning");
       } else if (date.isBefore(today)) {
@@ -192,6 +206,9 @@ function handleDrop(event, ui) {
 // make lanes droppable, and make the due date field a date picker
 $(document).ready(function () {
   $("#task-date").datepicker();
+  toDoList.on("click", ".delete-item-btn", handleDeleteTask);
+  inProgressList.on("click", ".delete-item-btn", handleDeleteTask);
+  doneList.on("click", ".delete-item-btn", handleDeleteTask);
 
   addTask.on("click", handleAddTask);
   for (task of taskList) {
@@ -201,8 +218,11 @@ $(document).ready(function () {
   renderTaskList();
 });
 
+
+/** HELPER FUNCTIONS **/
+
 /**
- * validateData validates data.
+ * validateData validate data and pop up error message when user violates
  *
  * @param {string} data needs validating
  * @param {string} cetegory of data
@@ -225,7 +245,3 @@ const clearForm = function () {
   $("#task-date").val("");
   $("#task-description").val("");
 };
-
-toDoList.on("click", ".delete-item-btn", handleDeleteTask);
-inProgressList.on("click", ".delete-item-btn", handleDeleteTask);
-doneList.on("click", ".delete-item-btn", handleDeleteTask);
