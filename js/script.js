@@ -5,12 +5,8 @@ if (taskList === null) taskList = [];
 let nextId = JSON.parse(localStorage.getItem("nextId"))
   ? JSON.parse(localStorage.getItem("nextId"))
   : [];
-//
 
-/** FIELDS **/
-const closeTaskBox = $("#close-task-box-btn");
-const showTaskBox = $("#show-task-box-btn");
-const blind = $("#blind");
+/** DATA FIELDS **/
 const taskForm = $("#task-form");
 const addTask = $("#add-task");
 const toDoList = $("#todo-cards-list");
@@ -139,7 +135,7 @@ function handleAddTask(event) {
     // generate task card and store toDoList
     createTaskCard(task);
 
-    // clear form and turn off blind and task box
+    // clear form
     clearForm();
 
     taskForm.modal("hide");
