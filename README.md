@@ -2,9 +2,10 @@
 
 ## Achievement
 Task Board helps users to identify the status of tasks
-1. if a task is overdue, then its background color is red
-2. if a task is due in 24 hours, then its background color is yellow
-3. otherwise, its background color is white
+1. if a task is overdue, then its background color is red.
+2. if a task is due in 24 hours, then its background color is yellow.
+3. otherwise, its background color is white.
+
 All tasks that users insert will be store in local storage, so that they can review their tasks whenever they visit the site.
 Explore Task Board at: 
 
