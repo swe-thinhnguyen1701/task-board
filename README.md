@@ -39,8 +39,10 @@ THEN the system will change a background color back to default.
 ![System changes background color back to default](./images/change-background-color.png)
 **Figure 3:** System automatically changes background color when a task is moved to DONE area.
 
+
 ```
 WHEN users click to delete button.
 THEN the system will remove a selected task from current STATUS and from local storage.
 ```
+![system removes task test 2](./images/remove-task.png)
 **Figure 4:** Test 2 task is removed
